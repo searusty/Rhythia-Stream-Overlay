@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythia Overlay Settings</title>
+    <style>
+        :root {
+            --bg: #0e0f11;
+            --card-bg: #111214;
+            --border: rgba(255,255,255,0.1);
+            --text: #ffffff;
+            --secondary: #b0b0b0;
+            --accent: #9b59b6;
+            --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 32px;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            line-height: 1.5;
+        }
+        h1 {
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+        }
+        .card {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background-color: #18191c;
+            color: var(--text);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        fieldset {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        fieldset legend {
+            padding: 0 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .checkbox-row input {
+            margin-right: 8px;
+        }
+        button[type="submit"] {
+            background-color: var(--accent);
+            border: none;
+            color: var(--text);
+            padding: 10px 16px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #884ea0;
+        }
+        .status-message {
+            margin-top: 12px;
+            color: #66bb6a; /* green */
+            font-size: 0.9rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Overlay Settings</h1>
+    <div class="card">
+        <form id="config-form">
+            <div class="form-group">
+                <label for="user_id">User ID</label>
+                <input type="number" id="user_id" name="user_id" min="1" required />
+            </div>
+            <div class="form-group">
+                <label for="interval">Update interval (seconds)</label>
+                <input type="number" id="interval" name="interval" min="1" value="1" required />
+            </div>
+            <div class="form-group">
+                <label for="displayMode">Display mode</label>
+                <select id="displayMode" name="displayMode">
+                    <option value="minimal">Minimal (leaderboard row)</option>
+                    <option value="maximal">Maximal (profile card)</option>
+                </select>
+            </div>
+            <fieldset>
+                <legend>Display Elements</legend>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showAvatar" name="showAvatar" />
+                    <label for="showAvatar">Avatar</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showFlag" name="showFlag" />
+                    <label for="showFlag">Country flag</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showUsername" name="showUsername" />
+                    <label for="showUsername">Username</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showRank" name="showRank" />
+                    <label for="showRank">Rank</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showSkillPoints" name="showSkillPoints" />
+                    <label for="showSkillPoints">Skill points</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showPlays" name="showPlays" />
+                    <label for="showPlays">Play count</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showSince" name="showSince" />
+                    <label for="showSince">Here since</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showTitle" name="showTitle" />
+                    <label for="showTitle">Title</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showGlobalRank" name="showGlobalRank" />
+                    <label for="showGlobalRank">Global rank</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showCountryRank" name="showCountryRank" />
+                    <label for="showCountryRank">Country rank</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showRhythmPoints" name="showRhythmPoints" />
+                    <label for="showRhythmPoints">Rhythm points</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showGapUp" name="showGapUp" />
+                    <label for="showGapUp">Gap to next</label>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="showGapDown" name="showGapDown" />
+                    <label for="showGapDown">Lead over next</label>
+                </div>
+            </fieldset>
+            <button type="submit">Save</button>
+            <div id="status" class="status-message">Saved.</div>
+        </form>
+    </div>
+
+    <script>
+        // Load existing configuration on page load
+        function loadConfig() {
+            fetch('config.json?cacheBust=' + Date.now())
+                .then(res => res.json())
+                .then(cfg => {
+                    if (cfg.user_id) document.getElementById('user_id').value = cfg.user_id;
+                    if (cfg.interval) document.getElementById('interval').value = cfg.interval;
+                    if (cfg.displayMode) {
+                        document.getElementById('displayMode').value = cfg.displayMode;
+                    }
+                    // booleans
+                    const opts = ['showAvatar','showFlag','showUsername','showRank','showSkillPoints','showPlays','showSince','showTitle','showGlobalRank','showCountryRank','showRhythmPoints','showGapUp','showGapDown'];
+                    opts.forEach(key => {
+                        const el = document.getElementById(key);
+                        if (el) {
+                            el.checked = cfg[key] !== undefined ? !!cfg[key] : true;
+                        }
+                    });
+                })
+                .catch(() => {});
+        }
+
+        function saveConfig(cfg) {
+            fetch('save_config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(cfg)
+            }).then(res => {
+                const status = document.getElementById('status');
+                if (res.ok) {
+                    status.textContent = '✓ Saved';
+                    status.style.display = 'block';
+                    setTimeout(() => { status.style.display = 'none'; }, 2000);
+                } else {
+                    status.textContent = 'Failed to save.';
+                    status.style.display = 'block';
+                    setTimeout(() => { status.style.display = 'none'; }, 3000);
+                }
+            }).catch(err => {
+                const status = document.getElementById('status');
+                status.textContent = 'Error: ' + err;
+                status.style.display = 'block';
+                setTimeout(() => { status.style.display = 'none'; }, 4000);
+            });
+        }
+
+        document.getElementById('config-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const cfg = {};
+            cfg.user_id = parseInt(document.getElementById('user_id').value, 10);
+            cfg.interval = parseInt(document.getElementById('interval').value, 10);
+            cfg.displayMode = document.getElementById('displayMode').value;
+            const opts = ['showAvatar','showFlag','showUsername','showRank','showSkillPoints','showPlays','showSince','showTitle','showGlobalRank','showCountryRank','showRhythmPoints','showGapUp','showGapDown'];
+            opts.forEach(key => {
+                cfg[key] = document.getElementById(key).checked;
+            });
+            saveConfig(cfg);
+        });
+        window.addEventListener('load', loadConfig);
+    </script>
+</body>
+</html>

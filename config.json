@@ -1,0 +1,20 @@
+{
+  "user_id": 103465,
+  "interval": 1,
+  "displayMode": "maximal",
+  "showAvatar": true,
+  "showFlag": true,
+  "showUsername": true,
+  "showRank": true,
+  "showSkillPoints": true,
+  "showPlays": true,
+  "showGapUp": true,
+  "showGapDown": true,
+  "showSince": true,
+  "showTitle": true,
+  "showGlobalRank": true,
+  "showCountryRank": true,
+  "showRhythmPoints": true,
+  "username": "Test",
+  "flag": "NL"
+}

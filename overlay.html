@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythia Stream Overlay</title>
+    <!-- Include shared styles -->
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <!-- Error or status messages. This element becomes visible on errors. -->
+    <div id="overlay-error" class="error-message" style="display:none;"></div>
+
+    <!-- Minimal leaderboard row. Visible when displayMode is 'minimal'. -->
+    <div id="minimal" class="row-card" style="display:none;">
+        <!-- Left section containing rank, flag, username and title -->
+        <div class="row-left">
+            <!-- Rank: animated value with prefix '#'. The inner span holds the current value. -->
+            <span id="min_rank" class="row-rank minimal-roll"><span class="minimal-current">#N/A</span></span>
+            <!-- Country flag -->
+            <img id="min_flag" class="row-flag" src="" alt="flag" />
+            <!-- Username and title icon -->
+            <div class="row-name">
+                <span id="min_username" class="row-username">N/A</span>
+                <img id="min_title_icon" class="row-title-icon" src="" alt="title" style="display:none;" />
+            </div>
+        </div>
+        <!-- Rhythm points in the middle column -->
+        <div class="row-points minimal-roll" id="min_skill_points"><span class="minimal-current">N/A</span></div>
+        <!-- Play count in the right column -->
+        <div class="row-plays minimal-roll" id="min_plays"><span class="minimal-current">N/A</span></div>
+    </div>
+
+    <!-- Maximal profile card. Visible when displayMode is 'maximal'. -->
+    <div id="maximal" class="profile-card" style="display:none;">
+        <div class="card-container">
+            <!-- Left column: avatar and user information -->
+            <div class="left-section">
+                <div class="avatar-wrap">
+                    <img id="max_avatar" class="avatar" src="" alt="avatar" />
+                    <div id="max_status" class="status" style="display:none;"></div>
+                </div>
+                <div class="info">
+                    <div class="info-top">
+                        <img id="max_flag" class="info-flag" src="" alt="flag" />
+                        <span id="max_username" class="info-username">N/A</span>
+                    </div>
+                    <div id="max_since" class="info-since">Here since: N/A</div>
+                </div>
+            </div>
+            <!-- Right column: statistics row. Each box shows a label and animated value. -->
+            <div class="stats-row">
+                <div id="max_title_box" class="stat title-box">
+                    <img id="max_title_icon" class="title-icon" src="" alt="title" style="display:none;" />
+                    <span id="max_title_name" class="title-name">N/A</span>
+                </div>
+                <div id="max_global_box" class="stat">
+                    <span class="stat-label">Global</span>
+                    <div id="max_global_rank" class="stat-value maximal-roll"><span class="maximal-current">N/A</span></div>
+                </div>
+                <div id="max_country_box" class="stat">
+                    <span class="stat-label">Country</span>
+                    <div id="max_country_rank" class="stat-value maximal-roll"><span class="maximal-current">N/A</span></div>
+                </div>
+                <div id="max_points_box" class="stat">
+                    <span class="stat-label">Rhythm Points</span>
+                    <div id="max_rhythm_points" class="stat-value maximal-roll"><span class="maximal-current">N/A</span></div>
+                </div>
+                <div id="max_plays_box" class="stat">
+                    <span class="stat-label">Plays</span>
+                    <div id="max_plays" class="stat-value maximal-roll"><span class="maximal-current">N/A</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay behaviour script -->
+    <script src="static/js/script.js"></script>
+</body>
+</html>
